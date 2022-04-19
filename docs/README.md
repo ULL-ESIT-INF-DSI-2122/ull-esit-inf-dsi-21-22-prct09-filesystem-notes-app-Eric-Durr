@@ -13,36 +13,41 @@
 
 ## Indice
 
-- [PRACTICA 7 - Digitalizando la colección de música de los abuelos](#practica-7---digitalizando-la-colección-de-música-de-los-abuelos)
+- [PRACTICA 9 - Aplicación de procesamiento de notas de texto](#practica-9---aplicación-de-procesamiento-de-notas-de-texto)
   - [Enlace a la documentación generada con TypeDoc](#enlace-a-la-documentación-generada-con-typedoc)
   - [Indice](#indice)
   - [Introducción](#introducción)
   - [Objetivos](#objetivos)
   - [Actividades previas](#actividades-previas)
-  - [Elaboración de la práctica](#elaboración-de-la-práctica)
-  - [Uso del menú](#uso-del-menú)
   - [Conclusiones](#conclusiones)
   - [Referencias](#referencias)
   - [Estructura del directorio](#estructura-del-directorio)
   - [Comandos npm del repositorio](#comandos-npm-del-repositorio)
 
 ***
+
 ## Introducción
-***
-## Objetivos
-***
-## Actividades previas
+
 ***
 
+## Objetivos
+
+## Actividades previas
+
+***
 
 ## Conclusiones
+
 ***
+
 ## Referencias
-***
+
 [Guión de la práctica](https://ull-esit-inf-dsi-2122.github.io/prct09-filesystem-notes-app/)
 
 ## Estructura del directorio
+
 ***
+
 ```txt
 P06/
 |____.github/         (Github actions workflow files)

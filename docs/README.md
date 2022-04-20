@@ -4,45 +4,48 @@
 >
 >>**[Eric Dürr Sierra](alu0101027005@ull.edu.es)** - **Última modificación**: 18/04/2022
 
-
-[![Coverage Status](https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct07-music-datamodel-grupo-c/badge.svg?branch=master)](https://coveralls.io/github/ULL-ESIT-INF-DSI-2122/DSI-P06-Eric-Durr-?branch=master)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ULL-ESIT-INF-DSI-2122_ull-esit-inf-dsi-21-22-prct07-music-datamodel-grupo-c&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ULL-ESIT-INF-DSI-2122_ull-esit-inf-dsi-21-22-prct07-music-datamodel-grupo-c)
-***
+[![Coverage Status](https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct09-filesystem-notes-app-Eric-Durr/badge.svg?branch=master)](https://coveralls.io/github/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct09-filesystem-notes-app-Eric-Durr?branch=master)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ULL-ESIT-INF-DSI-2122_ull-esit-inf-dsi-21-22-prct09-filesystem-notes-app-Eric-Durr&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ULL-ESIT-INF-DSI-2122_ull-esit-inf-dsi-21-22-prct09-filesystem-notes-app-Eric-Durr)***
 
 ## [Enlace a la documentación generada con TypeDoc](http://dsi-p09-code-docs.surge.sh/modules.html)
 
 ## Indice
 
-- [PRACTICA 7 - Digitalizando la colección de música de los abuelos](#practica-7---digitalizando-la-colección-de-música-de-los-abuelos)
+- [PRACTICA 9 - Aplicación de procesamiento de notas de texto](#practica-9---aplicación-de-procesamiento-de-notas-de-texto)
   - [Enlace a la documentación generada con TypeDoc](#enlace-a-la-documentación-generada-con-typedoc)
   - [Indice](#indice)
   - [Introducción](#introducción)
   - [Objetivos](#objetivos)
   - [Actividades previas](#actividades-previas)
-  - [Elaboración de la práctica](#elaboración-de-la-práctica)
-  - [Uso del menú](#uso-del-menú)
   - [Conclusiones](#conclusiones)
   - [Referencias](#referencias)
   - [Estructura del directorio](#estructura-del-directorio)
   - [Comandos npm del repositorio](#comandos-npm-del-repositorio)
 
 ***
+
 ## Introducción
-***
-## Objetivos
-***
-## Actividades previas
+
 ***
 
+## Objetivos
+
+## Actividades previas
+
+***
 
 ## Conclusiones
+
 ***
+
 ## Referencias
-***
+
 [Guión de la práctica](https://ull-esit-inf-dsi-2122.github.io/prct09-filesystem-notes-app/)
 
 ## Estructura del directorio
+
 ***
+
 ```txt
 P06/
 |____.github/         (Github actions workflow files)

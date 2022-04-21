@@ -1,4 +1,4 @@
-type Color =  'yellow' | 'blue' | 'red' | 'green';
+type Color = 'yellow' | 'blue' | 'red' | 'green';
 
 export default class Note {
   private _title: string;

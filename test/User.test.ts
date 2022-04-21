@@ -47,4 +47,7 @@ describe('User object tests', () => {
     // @ts-ignore
     expect(myUser.note(2).color).to.be.eq('red');
   });
+  it('Note can be searched by name', () => {
+    expect(myUser.noteByTitle('Shop list')).to.be.eql(myUser.note(2));
+  });
 });

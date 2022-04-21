@@ -36,7 +36,7 @@ describe('User object tests', () => {
   it('User is able to create defined note', () => {
     expect(myUser.addNote('Shop list', '-water\n-flour', 'red')).to.be.eq(true);
   });
-  it('User isn\'t able to create defined note', () => {
+  it('User isn\'t able to create existing note', () => {
     expect(myUser.addNote('Shop list', '-water\n-flour', 'red')).to.be.eq(false);
   });
   it('User second default note is created as expected', () => {
@@ -49,5 +49,13 @@ describe('User object tests', () => {
   });
   it('Note can be searched by name', () => {
     expect(myUser.noteByTitle('Shop list')).to.be.eql(myUser.note(2));
+  });
+  it('User is able to remove existing', () => {
+    expect(myUser.removeNote('Shop list')).to.be.eq(true);
+    expect(myUser.notes.length).to.be.eq(2);
+  });
+  it('User isn\'t able to remove a non existing note', () => {
+    expect(myUser.removeNote('Shop list')).to.be.eq(false);
+    expect(myUser.notes.length).to.be.eq(2);
   });
 });

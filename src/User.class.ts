@@ -1,7 +1,7 @@
 import Note, { Color } from './Note.class';
 
 export default class User {
-  private readonly _notes: Note[];
+  private _notes: Note[];
 
   private readonly _userName: string;
 
@@ -33,6 +33,14 @@ export default class User {
       } else {
         this.notes.push(new Note());
       }
+      return true;
+    }
+    return false;
+  }
+
+  public removeNote(title: string): boolean {
+    if (this.notes.find((el) => el.title === title)) {
+      this._notes = this._notes.filter((n) => n.title !== title);
       return true;
     }
     return false;

@@ -39,6 +39,9 @@ describe('User object tests', () => {
   it('User isn\'t able to create existing note', () => {
     expect(myUser.addNote('Shop list', '-water\n-flour', 'red')).to.be.eq(false);
   });
+  it('User is able to create a note only using title', () => {
+    expect(myUser.addNote('Routine')).to.be.eq(true);
+  });
   it('User second default note is created as expected', () => {
     // @ts-ignore
     expect(myUser.note(2).title).to.be.eq('Shop list');
@@ -52,11 +55,11 @@ describe('User object tests', () => {
   });
   it('User is able to remove existing', () => {
     expect(myUser.removeNote('Shop list')).to.be.eq(true);
-    expect(myUser.notes.length).to.be.eq(2);
+    expect(myUser.notes.length).to.be.eq(3);
   });
   it('User isn\'t able to remove a non existing note', () => {
     expect(myUser.removeNote('Shop list')).to.be.eq(false);
-    expect(myUser.notes.length).to.be.eq(2);
+    expect(myUser.notes.length).to.be.eq(3);
   });
   it('User is able to edit existing note', () => {
     expect(myUser.editNote('New note', '-water\n-flour\n-eggs', 'blue')).to.be.eq(true);
@@ -64,6 +67,12 @@ describe('User object tests', () => {
     expect(myUser.noteByTitle('New note').body).to.be.eq('-water\n-flour\n-eggs');
     // @ts-ignore
     expect(myUser.noteByTitle('New note').color).to.be.eq('blue');
+    expect(myUser.editNote('New note', '-water\n-flour\n-eggs', 'red')).to.be.eq(true);
+    expect(myUser.editNote('New note', '-water\n-flour\n-eggs', 'green')).to.be.eq(true);
+    expect(myUser.editNote('New note', '-water\n-flour\n-eggs', 'yellow')).to.be.eq(true);
+    expect(myUser.editNote('New note', '-water\n-flour\n-eggs', 'purple')).to.be.eq(true);
+    // @ts-ignore
+    expect(myUser.noteByTitle('New note').color).to.be.eq('yellow');
   });
   it('User isn\'t able to edit non existing note', () => {
     expect(myUser.editNote('Default', '-water\n-flour\n-eggs', 'blue')).to.be.eq(false);

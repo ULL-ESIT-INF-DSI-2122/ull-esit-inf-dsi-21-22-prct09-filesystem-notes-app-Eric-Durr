@@ -40,7 +40,7 @@ export default class User {
     return false;
   }
 
-  public editNote(title: string, body: string, color: Color): boolean {
+  public editNote(title: string, body: string, color: string): boolean {
     if (typeof this.noteByTitle(title) !== 'undefined') {
       // @ts-ignore
       this.noteByTitle(title).body = body;

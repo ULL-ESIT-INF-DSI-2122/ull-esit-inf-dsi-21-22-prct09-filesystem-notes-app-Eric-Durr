@@ -45,4 +45,22 @@ describe('Default note object tests', () => {
       + '───────────────\n'
       + 'Hello world\n');
   });
+  it('note JSON object can be accessed', () => {
+    expect(defaultNote.JSON).to.be.eql(
+      {
+        title: 'My default note',
+        body: 'Hello world',
+        color: 'yellow',
+      },
+    );
+  });
+  it('note JSON object can be accessed as string', () => {
+    expect(defaultNote.toJSONString).to.be.eql(
+      '{\n'
+      + `\t"title": "${defaultNote.title}",\n`
+      + `\t"body": "${defaultNote.body}",\n`
+      + `\t"color": "${defaultNote.color}"\n`
+      + '}\n',
+    );
+  });
 });

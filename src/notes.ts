@@ -51,25 +51,24 @@ yargs.command({
           console.log(`No notes found for ${argv.user} ...`);
           return;
         }
-        console.log(`${argv.user} notes:\n\n`);
+        console.log(`\n${argv.user} notes:\n\n`);
         notes.forEach((note) => {
-          const noteColor: string = JSON
+          const noteObj = JSON
             .parse(fs
-              .readFileSync(`./database/${argv.user}/${note}.json`)
-              .toString())
-            .color;
-          switch (noteColor) {
+              .readFileSync(`./database/${argv.user}/${note}`)
+              .toString());
+          switch (noteObj.color) {
             case 'blue':
-              console.log(blue(`- ${note}\n`));
+              console.log(blue(`- ${noteObj.title}\n`));
               break;
             case 'yellow':
-              console.log(yellow(`- ${note}\n`));
+              console.log(yellow(`- ${noteObj.title}\n`));
               break;
             case 'green':
-              console.log(green(`- ${note}\n`));
+              console.log(green(`- ${noteObj.title}\n`));
               break;
             case 'red':
-              console.log(red(`- ${note}\n`));
+              console.log(red(`- ${noteObj.title}\n`));
               break;
             default:
               break;
@@ -102,30 +101,33 @@ yargs.command({
   handler(argv) {
     if (typeof argv.user === 'string') {
       if (typeof argv.title === 'string') {
-        if (allFileNames.includes(`${argv.user}.notes.json`)) {
-          const content = fs.readFileSync(`./database/${argv.user}.notes.json`);
+        if (allFileNames.includes(`${argv.user}`)) {
           const currentUser: User = new User(argv.user);
-          const notes = JSON.parse(content.toString());
-          notes.notes.forEach((note: { title: string, body: string, color: Color }) => {
-            currentUser.addNote(note.title, note.body, note.color);
+          const notes: string[] = fs.readdirSync(`./database/${argv.user}/`);
+          notes.forEach((note) => {
+            const noteJSON = JSON
+              .parse(fs
+                .readFileSync(`./database/${argv.user}/${note}`)
+                .toString());
+            currentUser.addNote(noteJSON.title, noteJSON.body, noteJSON.color);
           });
-          if (notes.notes.length === 0) {
+          if (notes.length === 0) {
             console.log(`No notes found for ${argv.user} ...`);
             return;
           }
           if (currentUser.noteByTitle(argv.title) instanceof Note) {
             switch (currentUser.noteByTitle(argv.title)?.color) {
               case 'blue':
-                console.log(blue(currentUser.noteByTitle(argv.title)?.toString()));
+                console.log(blue.inverse(currentUser.noteByTitle(argv.title)?.toString()));
                 break;
               case 'yellow':
-                console.log(yellow(currentUser.noteByTitle(argv.title)?.toString()));
+                console.log(yellow.inverse(currentUser.noteByTitle(argv.title)?.toString()));
                 break;
               case 'green':
-                console.log(green(currentUser.noteByTitle(argv.title)?.toString()));
+                console.log(green.inverse(currentUser.noteByTitle(argv.title)?.toString()));
                 break;
               case 'red':
-                console.log(red(currentUser.noteByTitle(argv.title)?.toString()));
+                console.log(red.inverse(currentUser.noteByTitle(argv.title)?.toString()));
                 break;
               default:
                 break;
@@ -146,7 +148,7 @@ yargs.command({
 });
 
 yargs.command({
-  command: 'add',
+  command: 'add-note',
   describe: 'Add a new note',
   builder: {
     user: {
@@ -226,6 +228,56 @@ yargs.command({
         JSON.stringify(currentUser.note(currentUser.notes.length - 1)?.JSON),
       );
       console.log(green(`Note for ${argv.user} added successfully \n`));
+    }
+  },
+});
+
+yargs.command({
+  command: 'delete-note',
+  describe: 'Delete a note from a user',
+  builder: {
+    user: {
+      describe: 'User name',
+      demandOption: true,
+      type: 'string',
+    },
+    title: {
+      describe: 'Note title',
+      demandOption: true,
+      type: 'string',
+    },
+  },
+  handler(argv) {
+    if (typeof argv.user === 'string') {
+      if (typeof argv.title === 'string') {
+        if (allFileNames.includes(`${argv.user}`)) {
+          const currentUser: User = new User(argv.user);
+          const notes: string[] = fs.readdirSync(`./database/${argv.user}/`);
+          notes.forEach((note) => {
+            const noteJSON = JSON
+              .parse(fs
+                .readFileSync(`./database/${argv.user}/${note}`)
+                .toString());
+            currentUser.addNote(noteJSON.title, noteJSON.body, noteJSON.color);
+          });
+          if (notes.length === 0) {
+            console.log(`No notes found for ${argv.user} ...`);
+            return;
+          }
+          if (currentUser.removeNote(argv.title)) {
+            fs.rmSync(`./database/${argv.user}/${argv.title}.json`);
+            console.log(green(`Note with title ${argv.title} removed successfully\n`));
+          } else {
+            console.log(red(`ERROR: Note with title ${argv.title} doesn't exist\n`));
+          }
+        } else {
+          console.log(red('ERROR: User doesn\'t exist\n'));
+        }
+      } else {
+        console.log(red('ERROR: Note title was not specified\n'));
+      }
+    } else {
+      console.log(red('ERROR: User was not specified\n'));
     }
   },
 });

@@ -233,6 +233,79 @@ yargs.command({
 });
 
 yargs.command({
+  command: 'edit-note',
+  describe: 'Edit a certain note',
+  builder: {
+    user: {
+      describe: 'User name',
+      demandOption: true,
+      type: 'string',
+    },
+    title: {
+      describe: 'Note title',
+      demandOption: false,
+      type: 'string',
+    },
+    body: {
+      describe: 'Note body',
+      demandOption: false,
+      type: 'string',
+    },
+    color: {
+      describe: 'Note color',
+      demandOption: false,
+      type: 'string',
+    },
+  },
+  handler(argv) {
+    if (typeof argv.user === 'string') {
+      if (allFileNames.includes(`${argv.user}`)) {
+        const notes: string[] = fs.readdirSync(`./database/${argv.user}/`);
+        if (!notes.includes(`${argv.title}.json`)) {
+          console.log(red(`ERROR: Note with title ${argv.title} not found\n`));
+        } else {
+          const noteObj = JSON
+            .parse(fs
+              .readFileSync(`./database/${argv.user}/${argv.title}.json`)
+              .toString());
+          if (typeof argv.body === 'string') {
+            noteObj.body = argv.body;
+          }
+          if (typeof argv.color === 'string') {
+            switch (argv.color) {
+              case 'blue':
+                noteObj.color = 'blue';
+                break;
+              case 'yellow':
+                noteObj.color = 'yellow';
+                break;
+              case 'green':
+                noteObj.color = 'green';
+                break;
+              case 'red':
+                noteObj.color = 'red';
+                break;
+              default:
+                break;
+            }
+          }
+          if (typeof argv.title === 'string') {
+            fs.rmSync(`./database/${argv.user}/${argv.title}.json`);
+            fs.writeFileSync(
+              `./database/${argv.user}/${argv.title}.json`,
+              JSON.stringify(noteObj),
+            );
+            console.log(green(`Note ${argv.title} modified successfully for ${argv.user}\n`));
+          }
+        }
+      } else {
+        console.log(red(`ERROR: User ${argv.user} doesn't exist\n`));
+      }
+    }
+  },
+});
+
+yargs.command({
   command: 'delete-note',
   describe: 'Delete a note from a user',
   builder: {

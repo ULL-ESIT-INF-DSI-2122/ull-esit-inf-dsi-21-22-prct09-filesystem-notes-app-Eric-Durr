@@ -7,7 +7,7 @@ import {
   yellow,
 } from 'chalk';
 import User from './User.class';
-import { Color } from './Note.class';
+import { Note, Color } from './Note.class';
 
 const allFileNames: string[] = fs.readdirSync('database');
 
@@ -85,6 +85,67 @@ yargs.command({
       }
     } else {
       console.log(red('ERROR: User was not especified\n'));
+    }
+  },
+});
+
+yargs.command({
+  command: 'read-note',
+  describe: 'Read a single note from a user',
+  builder: {
+    user: {
+      describe: 'User name',
+      demandOption: true,
+      type: 'string',
+    },
+    title: {
+      describe: 'Note title',
+      demandOption: true,
+      type: 'string',
+    },
+  },
+  handler(argv) {
+    if (typeof argv.user === 'string') {
+      if (typeof argv.title === 'string') {
+        if (allFileNames.includes(`${argv.user}.notes.json`)) {
+          const content = fs.readFileSync(`./database/${argv.user}.notes.json`);
+          const currentUser: User = new User(argv.user);
+          const notes = JSON.parse(content.toString());
+          notes.notes.forEach((note: { title: string, body: string, color: Color }) => {
+            currentUser.addNote(note.title, note.body, note.color);
+          });
+          if (notes.notes.length === 0) {
+            console.log(`No notes found for ${argv.user} ...`);
+            return;
+          }
+          if (currentUser.noteByTitle(argv.title) instanceof Note) {
+            switch (currentUser.noteByTitle(argv.title)?.color) {
+              case 'blue':
+                console.log(blue(currentUser.noteByTitle(argv.title)?.toString()));
+                break;
+              case 'yellow':
+                console.log(yellow(currentUser.noteByTitle(argv.title)?.toString()));
+                break;
+              case 'green':
+                console.log(green(currentUser.noteByTitle(argv.title)?.toString()));
+                break;
+              case 'red':
+                console.log(red(currentUser.noteByTitle(argv.title)?.toString()));
+                break;
+              default:
+                break;
+            }
+          } else {
+            console.log(red(`ERROR: Note with title ${argv.title} doesn't exist\n`));
+          }
+        } else {
+          console.log(red('ERROR: User doesn\'t exist\n'));
+        }
+      } else {
+        console.log(red('ERROR: Note title was not specified\n'));
+      }
+    } else {
+      console.log(red('ERROR: User was not specified\n'));
     }
   },
 });

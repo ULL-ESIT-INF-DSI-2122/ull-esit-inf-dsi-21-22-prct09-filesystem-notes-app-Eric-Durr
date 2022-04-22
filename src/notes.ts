@@ -1,9 +1,13 @@
 import * as fs from 'fs';
 import * as yargs from 'yargs';
-import { green, red } from 'chalk';
+import {
+  green,
+  red,
+  blue,
+  yellow,
+} from 'chalk';
 import User from './User.class';
-import Note, { Color } from './Note.class';
-import color = Mocha.reporters.Base.color;
+import { Color } from './Note.class';
 
 const allFileNames: string[] = fs.readdirSync('database');
 
@@ -30,6 +34,57 @@ yargs.command({
       } else {
         console.log(red('ERROR: User already exists\n'));
       }
+    }
+  },
+});
+
+yargs.command({
+  command: 'list-titles',
+  describe: 'Show all notes titles for a user',
+  builder: {
+    user: {
+      describe: 'User name',
+      demandOption: true,
+      type: 'string',
+    },
+  },
+  handler(argv) {
+    if (typeof argv.user === 'string') {
+      if (allFileNames.includes(`${argv.user}.notes.json`)) {
+        const content = fs.readFileSync(`./database/${argv.user}.notes.json`);
+        const currentUser: User = new User(argv.user);
+        const notes = JSON.parse(content.toString());
+        notes.notes.forEach((note: { title: string, body: string, color: Color }) => {
+          currentUser.addNote(note.title, note.body, note.color);
+        });
+        if (notes.notes.length === 0) {
+          console.log(`No notes found for ${argv.user} ...`);
+          return;
+        }
+        console.log(`${argv.user} notes:\n\n`);
+        currentUser.notes.forEach((note) => {
+          switch (note.color) {
+            case 'blue':
+              console.log(blue(`- ${note.title}\n`));
+              break;
+            case 'yellow':
+              console.log(yellow(`- ${note.title}\n`));
+              break;
+            case 'green':
+              console.log(green(`- ${note.title}\n`));
+              break;
+            case 'red':
+              console.log(red(`- ${note.title}\n`));
+              break;
+            default:
+              break;
+          }
+        });
+      } else {
+        console.log(red('ERROR: User doesn\'t exist\n'));
+      }
+    } else {
+      console.log(red('ERROR: User was not especified\n'));
     }
   },
 });

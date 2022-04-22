@@ -23,14 +23,9 @@ yargs.command({
   },
   handler(argv) {
     if (typeof argv.user === 'string') {
-      if (!allFileNames.includes(`${argv.user}.notes.json`)) {
-        fs.writeFile(`database/${argv.user}.notes.json`, '{\n\t"notes": []\n}\n', (err) => {
-          if (err) {
-            console.log(red(`ERROR: ${err?.message}\n`));
-          } else {
-            console.log(green(`User ${argv.user} succesfully created \n`));
-          }
-        });
+      if (!allFileNames.includes(`${argv.user}`)) {
+        fs.mkdirSync(`database/${argv.user}`);
+        console.log(green(`User ${argv.user} successfully created \n`));
       } else {
         console.log(red('ERROR: User already exists\n'));
       }
@@ -50,31 +45,31 @@ yargs.command({
   },
   handler(argv) {
     if (typeof argv.user === 'string') {
-      if (allFileNames.includes(`${argv.user}.notes.json`)) {
-        const content = fs.readFileSync(`./database/${argv.user}.notes.json`);
-        const currentUser: User = new User(argv.user);
-        const notes = JSON.parse(content.toString());
-        notes.notes.forEach((note: { title: string, body: string, color: Color }) => {
-          currentUser.addNote(note.title, note.body, note.color);
-        });
-        if (notes.notes.length === 0) {
+      if (allFileNames.includes(`${argv.user}`)) {
+        const notes: string[] = fs.readdirSync(`./database/${argv.user}/`);
+        if (notes.length === 0) {
           console.log(`No notes found for ${argv.user} ...`);
           return;
         }
         console.log(`${argv.user} notes:\n\n`);
-        currentUser.notes.forEach((note) => {
-          switch (note.color) {
+        notes.forEach((note) => {
+          const noteColor: string = JSON
+            .parse(fs
+              .readFileSync(`./database/${argv.user}/${note}.json`)
+              .toString())
+            .color;
+          switch (noteColor) {
             case 'blue':
-              console.log(blue(`- ${note.title}\n`));
+              console.log(blue(`- ${note}\n`));
               break;
             case 'yellow':
-              console.log(yellow(`- ${note.title}\n`));
+              console.log(yellow(`- ${note}\n`));
               break;
             case 'green':
-              console.log(green(`- ${note.title}\n`));
+              console.log(green(`- ${note}\n`));
               break;
             case 'red':
-              console.log(red(`- ${note.title}\n`));
+              console.log(red(`- ${note}\n`));
               break;
             default:
               break;
@@ -178,19 +173,18 @@ yargs.command({
   handler(argv) {
     if (typeof argv.user === 'string') {
       const currentUser: User = new User(argv.user);
-      let notes: { notes: [] };
-
-      if (allFileNames.includes(`${argv.user}.notes.json`)) {
-        const content = fs.readFileSync(`./database/${argv.user}.notes.json`);
-        notes = JSON.parse(content.toString());
-        notes.notes.forEach((note: { title: string, body: string, color: Color }) => {
-          currentUser.addNote(note.title, note.body, note.color);
+      if (allFileNames.includes(`${argv.user}`)) {
+        const notes: string[] = fs.readdirSync(`./database/${argv.user}/`);
+        notes.forEach((note) => {
+          const noteJSON = JSON
+            .parse(fs
+              .readFileSync(`./database/${argv.user}/${note}`)
+              .toString());
+          currentUser.addNote(noteJSON.title, noteJSON.body, noteJSON.color);
         });
       } else {
-        fs.writeFileSync(`database/${argv.user}.notes.json`, '{\n\t"notes": []\n}\n');
+        fs.mkdirSync(`database/${argv.user}`);
         console.log(green(`User ${argv.user} created \n`));
-        const content = fs.readFileSync(`./database/${argv.user}.notes.json`);
-        notes = JSON.parse(content.toString());
       }
       if (typeof argv.title === 'string') {
         if (!currentUser.addNote(argv.title)) {
@@ -227,8 +221,10 @@ yargs.command({
         }
       }
       // @ts-ignore
-      notes.notes.push(currentUser.note(currentUser.notes.length - 1).JSON);
-      fs.writeFileSync(`./database/${argv.user}.notes.json`, JSON.stringify(notes));
+      fs.writeFileSync(
+        `./database/${argv.user}/${currentUser.note(currentUser.notes.length - 1)?.title}.json`,
+        JSON.stringify(currentUser.note(currentUser.notes.length - 1)?.JSON),
+      );
       console.log(green(`Note for ${argv.user} added successfully \n`));
     }
   },

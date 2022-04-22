@@ -27,7 +27,7 @@ jobs:
       - name: coverage info directory
         run: mkdir coverage
       - name: Coverage ☔
-        run: npm run get:coverage
+        run: npm run get:coverage > coverage/lcov.info
       - name: SonarCloud Scan 📈
         uses: SonarSource/sonarcloud-github-action@master
         env:

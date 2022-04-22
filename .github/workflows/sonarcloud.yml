@@ -28,6 +28,8 @@ jobs:
         run: mkdir coverage
       - name: Coverage ☔
         run: npm run get:coverage > coverage/lcov.info
+      - name: Delete nyc output
+        run: rm -r .nyc_output
       - name: SonarCloud Scan 📈
         uses: SonarSource/sonarcloud-github-action@master
         env:

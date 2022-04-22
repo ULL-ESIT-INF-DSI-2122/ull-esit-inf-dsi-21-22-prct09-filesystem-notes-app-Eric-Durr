@@ -1,6 +1,6 @@
 export type Color = 'yellow' | 'blue' | 'red' | 'green';
 
-export default class Note {
+export class Note {
   private _title: string;
 
   private _body: string;
@@ -50,7 +50,7 @@ export default class Note {
     };
   }
 
-  public toJSONString(): string {
+  get toJSONString(): string {
     return '{\n'
       + `\t"title": "${this.title}",\n`
       + `\t"body": "${this.body}",\n`

@@ -1,4 +1,4 @@
-import Note, { Color } from './Note.class';
+import { Note, Color } from './Note.class';
 
 export default class User {
   private _notes: Note[];

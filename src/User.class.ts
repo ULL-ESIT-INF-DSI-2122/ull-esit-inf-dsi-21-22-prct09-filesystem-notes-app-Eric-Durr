@@ -38,10 +38,43 @@ export default class User {
     return false;
   }
 
+  public editNote(title: string, body: string, color: Color): boolean {
+    if (typeof this.noteByTitle(title) !== 'undefined') {
+      // @ts-ignore
+      this.noteByTitle(title).body = body;
+      switch (color) {
+        case 'blue':
+          this.noteByTitle(title)?.colorIsBlue();
+          break;
+        case 'yellow':
+          this.noteByTitle(title)?.colorIsYellow();
+          break;
+        case 'green':
+          this.noteByTitle(title)?.colorIsGreen();
+          break;
+        case 'red':
+          this.noteByTitle(title)?.colorIsRed();
+          break;
+        default:
+          break;
+      }
+      return true;
+    }
+    return false;
+  }
+
   public removeNote(title: string): boolean {
     if (this.notes.find((el) => el.title === title)) {
       this._notes = this._notes.filter((n) => n.title !== title);
       return true;
+    }
+    return false;
+  }
+
+  public readNote(title: string): string | false {
+    if (typeof this.noteByTitle(title) !== 'undefined') {
+      // @ts-ignore
+      return this.noteByTitle(title).toString();
     }
     return false;
   }

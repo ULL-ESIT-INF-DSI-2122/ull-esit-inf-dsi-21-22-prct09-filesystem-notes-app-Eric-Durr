@@ -58,4 +58,23 @@ describe('User object tests', () => {
     expect(myUser.removeNote('Shop list')).to.be.eq(false);
     expect(myUser.notes.length).to.be.eq(2);
   });
+  it('User is able to edit existing note', () => {
+    expect(myUser.editNote('New note', '-water\n-flour\n-eggs', 'blue')).to.be.eq(true);
+    // @ts-ignore
+    expect(myUser.noteByTitle('New note').body).to.be.eq('-water\n-flour\n-eggs');
+    // @ts-ignore
+    expect(myUser.noteByTitle('New note').color).to.be.eq('blue');
+  });
+  it('User isn\'t able to edit non existing note', () => {
+    expect(myUser.editNote('Default', '-water\n-flour\n-eggs', 'blue')).to.be.eq(false);
+  });
+  it('User can read a note by title', () => {
+    expect(myUser.readNote('New note (1)'))
+      .to.be.eq('New note (1)\n'
+        + '────────────\n'
+        + '\n');
+  });
+  it('When a note doesn\'t exist false is returned', () => {
+    expect(myUser.readNote('New note (2)')).to.be.false;
+  });
 });

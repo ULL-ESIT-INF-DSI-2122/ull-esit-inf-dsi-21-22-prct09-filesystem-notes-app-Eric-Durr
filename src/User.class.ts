@@ -28,6 +28,8 @@ export default class User {
     if (!this.notes.find((el) => el.title === title)) {
       if (title !== undefined && body !== undefined && color !== undefined) {
         this.notes.push(new Note(title, body, color));
+      } else if (title !== undefined && (body === undefined || color === undefined)) {
+        this.notes.push(new Note(title));
       } else if (this.notes.find((el) => el.title === 'New note')) {
         this.notes.push(new Note(`New note (${this.notes.length})`));
       } else {

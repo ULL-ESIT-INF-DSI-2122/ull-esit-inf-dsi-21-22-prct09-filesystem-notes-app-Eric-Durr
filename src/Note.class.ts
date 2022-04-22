@@ -41,4 +41,20 @@ export default class Note {
     output += `${this.body}\n`;
     return output;
   }
+
+  get JSON() {
+    return {
+      title: `${this.title}`,
+      body: `${this.body}`,
+      color: `${this.color}`,
+    };
+  }
+
+  public toJSONString(): string {
+    return '{\n'
+      + `\t"title": "${this.title}",\n`
+      + `\t"body": "${this.body}",\n`
+      + `\t"color": "${this.color}"\n`
+      + '}\n';
+  }
 }

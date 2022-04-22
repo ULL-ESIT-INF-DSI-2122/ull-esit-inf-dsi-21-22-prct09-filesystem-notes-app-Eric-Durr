@@ -8,8 +8,8 @@ export class Note {
   private _color: Color;
 
   constructor(
-    title: string = 'New note',
-    body: string = '',
+    title = 'New note',
+    body = '',
     color: Color = 'yellow',
   ) {
     this._title = title;

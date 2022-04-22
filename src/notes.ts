@@ -7,7 +7,8 @@ import {
   yellow,
 } from 'chalk';
 import User from './User.class';
-import { Note, Color } from './Note.class';
+import { Note } from './Note.class';
+import { createUserList } from './manage.functions';
 
 const allFileNames: string[] = fs.readdirSync('database');
 
@@ -102,16 +103,8 @@ yargs.command({
     if (typeof argv.user === 'string') {
       if (typeof argv.title === 'string') {
         if (allFileNames.includes(`${argv.user}`)) {
-          const currentUser: User = new User(argv.user);
-          const notes: string[] = fs.readdirSync(`./database/${argv.user}/`);
-          notes.forEach((note) => {
-            const noteJSON = JSON
-              .parse(fs
-                .readFileSync(`./database/${argv.user}/${note}`)
-                .toString());
-            currentUser.addNote(noteJSON.title, noteJSON.body, noteJSON.color);
-          });
-          if (notes.length === 0) {
+          const currentUser: User = createUserList(argv.user);
+          if (currentUser.notes.length === 0) {
             console.log(`No notes found for ${argv.user} ...`);
             return;
           }
@@ -324,16 +317,8 @@ yargs.command({
     if (typeof argv.user === 'string') {
       if (typeof argv.title === 'string') {
         if (allFileNames.includes(`${argv.user}`)) {
-          const currentUser: User = new User(argv.user);
-          const notes: string[] = fs.readdirSync(`./database/${argv.user}/`);
-          notes.forEach((note) => {
-            const noteJSON = JSON
-              .parse(fs
-                .readFileSync(`./database/${argv.user}/${note}`)
-                .toString());
-            currentUser.addNote(noteJSON.title, noteJSON.body, noteJSON.color);
-          });
-          if (notes.length === 0) {
+          const currentUser: User = createUserList(argv.user);
+          if (currentUser.notes.length === 0) {
             console.log(`No notes found for ${argv.user} ...`);
             return;
           }

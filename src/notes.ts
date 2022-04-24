@@ -1,4 +1,3 @@
-
 import * as fs from 'fs';
 import * as yargs from 'yargs';
 import {
@@ -36,7 +35,29 @@ yargs.command({
 });
 
 yargs.command({
-  command: 'list-titles',
+  command: 'delete-user',
+  describe: 'Remove an existing user from the system',
+  builder: {
+    user: {
+      describe: 'User name',
+      demandOption: true,
+      type: 'string',
+    },
+  },
+  handler(argv) {
+    if (typeof argv.user === 'string') {
+      if (allFileNames.includes(`${argv.user}`)) {
+        fs.rmSync(`database/${argv.user}`, { recursive: true, force: true });
+        console.log(green(`User ${argv.user} successfully deleted \n`));
+      } else {
+        console.log(red('ERROR: User doesn\'t exists\n'));
+      }
+    }
+  },
+});
+
+yargs.command({
+  command: 'list-notes',
   describe: 'Show all notes titles for a user',
   builder: {
     user: {

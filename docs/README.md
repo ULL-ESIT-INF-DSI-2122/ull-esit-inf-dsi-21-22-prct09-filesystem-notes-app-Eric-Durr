@@ -1,4 +1,4 @@
-# PRACTICA 9 | Aplicación de procesamiento de notas de texto
+# PRACTICA 9 - Aplicación de procesamiento de notas de texto
 
 >Informe para la asignatura de Desarrollo de Sistemas Informáticos
 >
@@ -15,15 +15,27 @@
 
 ## Indice
 
-- [PRACTICA 9 - Aplicación de procesamiento de notas de texto](#practica-9-|-Aplicación-de-procesamiento-de-notas-de-texto)
+- [PRACTICA 9 - Aplicación de procesamiento de notas de texto](#practica-9---aplicación-de-procesamiento-de-notas-de-texto)
   - [Enlace a la documentación generada con TypeDoc](#enlace-a-la-documentación-generada-con-typedoc)
   - [Indice](#indice)
   - [Introducción](#introducción)
   - [Objetivos](#objetivos)
   - [Actividades previas](#actividades-previas)
-  - [Conclusiones](#conclusiones)
+  - [Clases del programa](#clases-del-programa)
+    - [Clase Note](#clase-note)
+    - [Clase User](#clase-user)
+  - [Programa principal](#programa-principal)
+    - [Opción de creación de usuario](#opción-de-creación-de-usuario)
+    - [Opción de creación de usuario](#opción-de-creación-de-usuario-1)
+    - [Opción de adición de nota](#opción-de-adición-de-nota)
+    - [Opción de edición de una nota](#opción-de-edición-de-una-nota)
+    - [Opción de lectura de títulos](#opción-de-lectura-de-títulos)
+    - [Opción de lectura de una nota](#opción-de-lectura-de-una-nota)
+    - [Opción de eliminación de una nota](#opción-de-eliminación-de-una-nota)
+  - [Para la ejecución](#para-la-ejecución)
   - [Referencias](#referencias)
   - [Estructura del directorio](#estructura-del-directorio)
+  - [Comandos para la aplicación de notas](#comandos-para-la-aplicación-de-notas)
   - [Comandos npm del repositorio](#comandos-npm-del-repositorio)
 
 ***
@@ -335,7 +347,7 @@ y cuyos argumentos pueden ser:
 - --user="nombre de usuario"
 - --title="título de la nota"
 - --body="contenido de la nota"
-- --color=("red" | "blue" | "green" | "yellow")
+- --color=("red", "blue", "green", "yellow")
 
 ***
 
